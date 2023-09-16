@@ -2,7 +2,10 @@ package main
 
 import (
 	"backend-blogtechv2/db"
+	"backend-blogtechv2/handler"
 	"backend-blogtechv2/log"
+	repoimpl "backend-blogtechv2/repositoty/repo_impl"
+	userrouter "backend-blogtechv2/router/user_router"
 	"fmt"
 	"os"
 
@@ -26,6 +29,17 @@ func main() {
 	sql.Connect()
 	defer sql.Close()
 	e := echo.New()
+
+	userHandler := handler.UserHandler{
+		UserRepo: repoimpl.NewUserRepo(sql),
+	}
+
+	api := userrouter.API{
+		Echo:        e,
+		UserHandler: userHandler,
+	}
+
+	api.SetupRouter()
 
 	e.Logger.Fatal(e.Start(":3000"))
 }

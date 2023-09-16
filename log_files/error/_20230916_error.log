@@ -1,0 +1,2 @@
+time="2023-09-16T18:35:44.7253365+07:00" level=error msg="validator not registered" file="G:/My-BlogTech/backend-blogtechv2/handler/user_handler.go" line=33
+time="2023-09-16T18:46:27.8498093+07:00" level=error msg="pq: duplicate key value violates unique constraint \"users_email_key\"" file="G:/My-BlogTech/backend-blogtechv2/repositoty/repo_impl/user_repo_impl.go" line=42
