@@ -1,0 +1,13 @@
+time="2023-09-18T17:20:57.2816784+07:00" level=error msg="pq: duplicate key value violates unique constraint \"users_email_key\"" file="G:/My-BlogTech/backend-blogtechv2/repositoty/repo_impl/user_repo_impl.go" line=44
+time="2023-09-18T19:44:40.7266312+07:00" level=error msg="Key: 'ReqSignUp.FullName' Error:Field validation for 'FullName' failed on the 'required' tag" file="G:/My-BlogTech/backend-blogtechv2/handler/user_handler.go" line=38
+time="2023-09-18T19:52:31.2730847+07:00" level=error msg="Mật khẩu tối thiểu 8 kí tự" file="G:/My-BlogTech/backend-blogtechv2/handler/user_handler.go" line=114
+time="2023-09-18T19:52:55.1089295+07:00" level=error msg="Mật khẩu tối thiểu 8 kí tự" file="G:/My-BlogTech/backend-blogtechv2/handler/user_handler.go" line=114
+time="2023-09-18T19:53:01.6084819+07:00" level=error msg="FullName là bắt buộc" file="G:/My-BlogTech/backend-blogtechv2/handler/user_handler.go" line=36
+time="2023-09-18T19:53:08.98024+07:00" level=error msg="pq: duplicate key value violates unique constraint \"users_email_key\"" file="G:/My-BlogTech/backend-blogtechv2/repositoty/repo_impl/user_repo_impl.go" line=44
+time="2023-09-18T19:54:54.9687871+07:00" level=error msg="Mật khẩu tối thiểu 8 kí tự" file="G:/My-BlogTech/backend-blogtechv2/handler/user_handler.go" line=36
+time="2023-09-18T19:55:03.0037716+07:00" level=error msg="Mật khẩu tối thiểu 8 kí tự" file="G:/My-BlogTech/backend-blogtechv2/handler/user_handler.go" line=36
+time="2023-09-18T19:56:10.7850672+07:00" level=error msg="pq: duplicate key value violates unique constraint \"users_email_key\"" file="G:/My-BlogTech/backend-blogtechv2/repositoty/repo_impl/user_repo_impl.go" line=44
+time="2023-09-18T19:56:14.9665628+07:00" level=error msg="Email không hợp lệ" file="G:/My-BlogTech/backend-blogtechv2/handler/user_handler.go" line=36
+time="2023-09-18T20:08:14.414291+07:00" level=error msg="Email không hợp lệ" file="G:/My-BlogTech/backend-blogtechv2/handler/user_handler.go" line=38
+time="2023-09-19T06:48:28.3714025+07:00" level=error msg="Mật khẩu tối thiểu 8 kí tự" file="G:/My-BlogTech/backend-blogtechv2/handler/user_handler.go" line=116
+time="2023-09-19T06:50:31.9375131+07:00" level=error msg="Email không hợp lệ" file="G:/My-BlogTech/backend-blogtechv2/handler/user_handler.go" line=38

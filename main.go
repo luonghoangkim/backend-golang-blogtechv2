@@ -3,9 +3,10 @@ package main
 import (
 	"backend-blogtechv2/db"
 	"backend-blogtechv2/handler"
-	"backend-blogtechv2/log"
+	"backend-blogtechv2/helper"
+	"backend-blogtechv2/log" 
 	repoimpl "backend-blogtechv2/repositoty/repo_impl"
-	userrouter "backend-blogtechv2/router/user_router"
+	"backend-blogtechv2/router"
 	"fmt"
 	"os"
 
@@ -30,13 +31,23 @@ func main() {
 	defer sql.Close()
 	e := echo.New()
 
+	structValidator := helper.NewStructValidator()
+	structValidator.RegisterValidate() 
+	e.Validator = structValidator
+
 	userHandler := handler.UserHandler{
 		UserRepo: repoimpl.NewUserRepo(sql),
 	}
 
-	api := userrouter.API{
+	postHandler := handler.PostHandler{
+		PostRepo: repoimpl.NewPostRepo(sql),
+	}
+
+	 
+	api := router.API{
 		Echo:        e,
 		UserHandler: userHandler,
+		PostHandler: postHandler,
 	}
 
 	api.SetupRouter()

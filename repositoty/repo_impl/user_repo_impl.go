@@ -5,8 +5,10 @@ import (
 	"backend-blogtechv2/db"
 	"backend-blogtechv2/log"
 	"backend-blogtechv2/model"
+	"backend-blogtechv2/model/req"
 	repositoty "backend-blogtechv2/repositoty"
 	"context"
+	"database/sql"
 	"time"
 
 	"github.com/lib/pq"
@@ -47,5 +49,66 @@ func (u *UserRepoImpl) SaveUser(context context.Context, user model.User) (model
 		}
 		return user, bananaErr.SignUpFail
 	}
+	return user, nil
+}
+
+func (u *UserRepoImpl) CheckLogin(context context.Context, loginReq  req.ReqSignIn) (model.User , error){
+	var user = model.User{}
+	err := u.sql.Db.GetContext(context , &user ,"SELECT * FROM users WHERE email=$1", loginReq.Email)
+
+	if err != nil { 
+		if err == sql.ErrNoRows {
+			return user , bananaErr.UserNotFound
+		}
+		log.Error(err.Error())
+		return user , err
+	}
+	return user, nil
+}
+
+func (u *UserRepoImpl)  SelectUserByID(context context.Context, userId string) (model.User , error) {
+	var user model.User
+
+	err := u.sql.Db.GetContext(context, &user,
+		"SELECT * FROM users WHERE user_id = $1", userId)
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return user, bananaErr.UserNotFound
+		}
+		log.Error(err.Error())
+		return user, err
+	}
+
+	return user, nil
+}
+
+func (u UserRepoImpl) UpdateUser(context context.Context, user model.User) (model.User, error) {
+	sqlStatement := `
+		UPDATE users
+		SET 
+			full_name  = (CASE WHEN LENGTH(:full_name) = 0 THEN full_name ELSE :full_name END),
+			email = (CASE WHEN LENGTH(:email) = 0 THEN email ELSE :email END),
+			updated_at 	  = COALESCE (:updated_at, updated_at)
+		WHERE user_id    = :user_id
+	`
+
+	user.UpdatedAt = time.Now()
+
+	result, err := u.sql.Db.NamedExecContext(context, sqlStatement, user)
+	if err != nil {
+		log.Error(err.Error())
+		return user, err
+	}
+ 
+	count, err := result.RowsAffected()
+	if err != nil {
+		log.Error(err.Error())
+		return user, bananaErr.UserNotUpdated
+	}
+	if count == 0 {
+		return user, bananaErr.UserNotUpdated
+	}
+
 	return user, nil
 }
