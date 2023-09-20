@@ -8,23 +8,32 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func RequireAdmin(next echo.HandlerFunc) echo.HandlerFunc {
+func AdminMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		tokenData, ok := c.Get("user").(*jwt.Token)
-		if !ok || tokenData == nil {
+		user := c.Get("user")
+		if user == nil {
+			// Handle the error appropriately here, e.g. return an error response
 			return c.JSON(http.StatusUnauthorized, model.Response{
 				StatusCode: http.StatusUnauthorized,
-				Message:    "Token không hợp lệ hoặc không tồn tại",
+				Message:    "No user token provided",
 				Data:       nil,
 			})
 		}
 
-		clams := tokenData.Claims.(*model.JwtCustomClaim)
-
-		// Kiểm tra xem người dùng có quyền ADMIN không
-		if clams.Role != "ADMIN" {
+		userToken, ok := user.(*jwt.Token)
+		if !ok {
+			// Handle the error appropriately here, e.g. return an error response
 			return c.JSON(http.StatusUnauthorized, model.Response{
 				StatusCode: http.StatusUnauthorized,
+				Message:    "Invalid user token",
+				Data:       nil,
+			})
+		}
+
+		claims := userToken.Claims.(*model.JwtCustomClaim)
+		if claims.Role != "ADMIN" {
+			return c.JSON(http.StatusForbidden, model.Response{
+				StatusCode: http.StatusForbidden,
 				Message:    "Chỉ có quyền ADMIN mới được phép thực hiện tác vụ này",
 				Data:       nil,
 			})
@@ -33,4 +42,3 @@ func RequireAdmin(next echo.HandlerFunc) echo.HandlerFunc {
 		return next(c)
 	}
 }
-

@@ -3,7 +3,7 @@ package model
 import "time"
 
 type Post struct { 
-	PID           string    `json:"-" db:"pid,omitempty"` 
+	PID           string    `json:"postID" db:"pid,omitempty"` 
 	Title         string    `json:"title" db:"title,omitempty"`
 	Summary       string    `json:"summary" db:"summary,omitempty"`
 	Author        string    `json:"author" db:"author,omitempty"`
@@ -13,3 +13,4 @@ type Post struct {
 	CreatedAt     time.Time `json:"created_at" db:"created_at,omitempty"`
 	UpdatedAt     time.Time `json:"-" db:"updated_at,omitempty"`
 }
+

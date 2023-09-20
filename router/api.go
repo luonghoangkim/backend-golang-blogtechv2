@@ -24,6 +24,11 @@ func (api *API) SetupRouter() {
 	user.PUT("/profile/update", api.UserHandler.UpdateProfile) 
 
 	// post
-	post := api.Echo.Group("/post")
+	post := api.Echo.Group("/post", middleware.JWTMiddleware())
 	post.POST("", api.PostHandler.HandlePost)
+	post.GET("/selectedPost", api.PostHandler.GetPostByID)
+	post.GET("/getAllPost", api.PostHandler.GetAllPostsByTable)
+	post.PUT("/updatePost", api.PostHandler.UpdatePost)
+
+
 }
