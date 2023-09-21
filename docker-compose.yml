@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  web-service:
+    container_name: web-blogtechv2
+    build: .
+    image: web-blogtechv2:1.0
+    ports:
+      - "3000:3000"
+    environment:
+      - APP_NAME=myblogTech
