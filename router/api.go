@@ -25,6 +25,7 @@ func (api *API) SetupRouter() {
 
 	// post
 	post := api.Echo.Group("/post", middleware.JWTMiddleware())
+	post.Use(middleware.AdminOnlyMiddleware) 
 	post.POST("", api.PostHandler.HandlePost)
 	post.GET("/selectedPost", api.PostHandler.GetPostByID)
 	post.GET("/getAllPost", api.PostHandler.GetAllPostsByTable)
