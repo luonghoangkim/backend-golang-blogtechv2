@@ -45,7 +45,7 @@ func (u *UserHandler) HandleSignUp(c echo.Context) error {
 
 	// Băm và mã hóa mật khẩu người dùng.
 	hash := security.HashAndSalt([]byte(req.Password))
-	role := model.MENBER.String()
+	role := model.ADMIN.String()
 
 	// Tạo một User ID mới sử dụng UUID.
 	userId, err := uuid.NewUUID()
