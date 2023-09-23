@@ -16,4 +16,5 @@ var(
 	PostNotFound = errors.New("Bài viết không tồn tại")
 	GetPostFail =  errors.New("Lấy bài thất bại")
 	UpdatePostFail = errors.New("Cập nhật thất bại")
+	DeletePostFail =  errors.New("Xóa bài thất bại")
 )

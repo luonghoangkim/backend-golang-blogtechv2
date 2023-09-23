@@ -159,3 +159,23 @@ func (p *PostRepoImpl) UpdatePost(context context.Context, post model.Post, targ
 	return post, nil
 }
 
+func (p *PostRepoImpl) DeletePost(context context.Context, postID string, targetTable string) error{
+	// Xác định bảng mục tiêu dựa vào giá trị targetTable.
+    tableName, err := p.getTableName(targetTable)
+    if err != nil {
+        return err
+    }
+
+	// Chuẩn bị câu lệnh SQL để xóa bài viết từ bảng mục tiêu.
+    statement := `
+        DELETE FROM ` + tableName + ` WHERE pid = $1
+    `
+	// Thực hiện truy vấn DELETE và kiểm tra lỗi.
+    _, err = p.sql.Db.ExecContext(context, statement, postID)
+    if err != nil {
+        log.Error(err.Error())
+        return bananaErr.DeletePostFail
+    }
+
+    return nil
+}

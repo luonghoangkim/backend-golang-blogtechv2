@@ -30,6 +30,7 @@ func (api *API) SetupRouter() {
 	post.GET("/selectedPost", api.PostHandler.GetPostByID)
 	post.GET("/getAllPost", api.PostHandler.GetAllPostsByTable)
 	post.PUT("/updatePost", api.PostHandler.UpdatePost)
+	post.DELETE("/deletePost" , api.PostHandler.DeletePost)
 
 
 }
