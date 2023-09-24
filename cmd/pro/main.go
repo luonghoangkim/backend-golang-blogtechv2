@@ -4,12 +4,13 @@ import (
 	"backend-blogtechv2/db"
 	"backend-blogtechv2/handler"
 	"backend-blogtechv2/helper"
-	"backend-blogtechv2/log" 
+	"backend-blogtechv2/log"
 	repoimpl "backend-blogtechv2/repositoty/repo_impl"
 	"backend-blogtechv2/router"
 	"fmt"
 	"os"
 
+	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/echo/v4"
 )
 func init() {
@@ -31,6 +32,11 @@ func main() {
 	defer sql.Close()
 	e := echo.New()
 
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"http://localhost:3000"}, // Cho phép origin từ localhost:3000
+		AllowMethods: []string{echo.GET, echo.HEAD, echo.PUT, echo.PATCH, echo.POST, echo.DELETE},
+	}))
+	
 	structValidator := helper.NewStructValidator()
 	structValidator.RegisterValidate() 
 	e.Validator = structValidator
@@ -49,6 +55,7 @@ func main() {
 		UserHandler: userHandler,
 		PostHandler: postHandler,
 	}
+	
 
 	api.SetupRouter()
  
